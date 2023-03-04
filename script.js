@@ -46,26 +46,28 @@ function getResult(){
         (userChoice == "✌🏿" && botChoice == "👊🏿") ? "You Lose!!" :
         (userChoice == "✌🏿" && botChoice == "🖐🏿") ? "You Win!!" : ''
         textResult.innerHTML = result
-    
+
+        if (result == "Tie!!"){
+            document.getElementById('result').style.color = "blue"
+        }
         if (result == "You Win!!"){
             yourScore++;
-            userScore.innerHTML = yourScore
+            userScore.innerHTML = yourScore;
+            document.getElementById('result').style.color = 'green'
         }
         if(result == "You Lose!!"){
             botScore++;
             computerScore.innerHTML = botScore
+            document.getElementById('result').style.color = 'red'
         }
-    // Alert Game Over
-        if(yourScore === 5){
-            alert("GAME OVER: You WIN!!!")
+// Game Over alert with automatic reload//
+        if(yourScore === 10){
+           alert("Gam Over \nYou WIN!!!");
+            window.location.reload();
         }
-        if(botScore === 5){
-            alert("GAME OVER: You LOST!!!")
+        if(botScore === 10){
+            alert("Game Over \nYou LOST!!!")
+            window.location.reload();
         }
 }
 
-//reload button//
-reloadBtn.innerText = 'Reset'
-reloadBtn.addEventListener('click',() => {
-window.location.reload();
-})
