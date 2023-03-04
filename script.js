@@ -1,20 +1,20 @@
-const botChoiceDisplay = document.getElementById('bot-choice')
 const userChoiceDisplay = document.getElementById('user-choice')
-const resultDisplay = document.getElementById('result')
-const possibleChoices = document.querySelectorAll('.selection')
+const botChoiceDisplay = document.getElementById('bot-choice')
+const resultDisplay = document.getElementsByClassName('result')
+var possibleChoices = document.querySelectorAll('.selection')
+const reloadBtn = document.querySelector('.reload')
 
+//for player choice//
 possibleChoices.forEach(possibleChoice => possibleChoice.   addEventListener('click', (e) => {
-    userChoice = e.target.id
+    userChoice = e.target.innerHTML
     userChoiceDisplay.innerHTML = userChoice
     generateBotChoice()
     getResult()
-
 }))
- 
+
+//for computer choice random//
 function generateBotChoice() {
     const randomNumber = Math.floor(Math.random() * possibleChoices.length  )
- 
-    
     if(randomNumber == 0) {
         botChoice = "👊🏿"
     }
@@ -24,94 +24,48 @@ function generateBotChoice() {
     if(randomNumber == 2) {
         botChoice = "✌🏿"
     }
-    botChoiceDisplay.innerHTML = botChoice
-    
+    botChoiceDisplay.innerHTML = botChoice   
 }
 
-const playerScoreBoard = document.querySelector('.p-count')
-const computerScoreBoard = document.querySelector('.c-count')
-const result = document.querySelector('#result');
-let playerScore = 0;
-let computerScore = 0;
+// lose or win display  with incrementing of score//   
+let textResult = document.querySelector('#result')
+let botChoice = botChoiceDisplay.innerHTML
+let userChoice = userChoiceDisplay.innerHTML
 
-    
+const computerScore = document.querySelector('p.c-count')
+const userScore = document.querySelector('p.p-count')
+let botScore = 0;
+let yourScore = 0;
 
 function getResult(){
-
-    if (botChoice === userChoice){
-        result.textContent = 'Tie !!'
-        result.style.color = "black"
-    }
-    else if (botChoice == "👊🏿") {
-        if (userChoice == "✌🏿"){
-        result.textContent = 'Computer Won !!';
-        computerScore++;
-        computerScoreBoard.textContent = computerScore;
-        result.style.color = "red"
-       
-        
-
-    }
-    else {
-        result.textContent = 'Player Won !!'
-        playerScore++;
-        playerScoreBoard.textContent = playerScore;
-        result.style.color = "green"
-       
+    let result = (botChoice === userChoice) ? 'Tie!!' : 
+        (userChoice == "👊🏿" && botChoice == "🖐🏿") ? "You Lose!!":
+        (userChoice == "👊🏿" && botChoice == "✌🏿") ? "You Win!!" :
+        (userChoice == "🖐🏿" && botChoice == "👊🏿") ? "You Win!!": 
+        (userChoice == "🖐🏿" && botChoice == "✌🏿") ? "You Lose!!": 
+        (userChoice == "✌🏿" && botChoice == "👊🏿") ? "You Lose!!" :
+        (userChoice == "✌🏿" && botChoice == "🖐🏿") ? "You Win!!" : ''
+        textResult.innerHTML = result
+    
+        if (result == "You Win!!"){
+            yourScore++;
+            userScore.innerHTML = yourScore
         }
-    }
-    else if(botChoice === "👊🏿"){
-        if(userChoice == "🖐🏿"){
-            result.textContent = 'Player Won !!'
-            playerScore++;
-            playerScoreBoard.textContent = playerScore;
-            result.style.color = "green"
-
+        if(result == "You Lose!!"){
+            botScore++;
+            computerScore.innerHTML = botScore
         }
-        else{
-            result.textContent = 'Computer Won !!';
-            computerScore++;
-            computerScoreBoard.textContent = computerScore;
-            result.style.color = "red"
+    // Alert Game Over
+        if(yourScore === 5){
+            alert("GAME OVER: You WIN!!!")
         }
-    }
-    else if(botChoice === "🖐🏿"){
-        if(userChoice == "✌🏿"){
-            result.textContent = 'Player Won !!'
-            playerScore++;
-            playerScoreBoard.textContent = playerScore;
-            result.style.color = "green"
+        if(botScore === 5){
+            alert("GAME OVER: You LOST!!!")
         }
-        else{
-            result.textContent = 'Computer Won!!';
-            computerScore++;
-            computerScoreBoard.textContent = computerScore;
-            result.style.color = "red"
-        }
-    }
-    else if(botChoice === "✌🏿"){
-        if(userChoice == "👊🏿"){
-            result.textContent = 'Player Won !!'
-            playerScore++;
-            playerScoreBoard.textContent = playerScore;
-            result.style.color = "green"
-        }
-        else{
-            result.textContent = 'Computer Won !!';
-            computerScore++;
-            computerScoreBoard.textContent = computerScore;
-            result.style.color = "red"
-        }
-    }
-        
 }
 
-const reloadBtn = document.querySelector('.reload');
-
+//reload button//
 reloadBtn.innerText = 'Reset'
 reloadBtn.addEventListener('click',() => {
 window.location.reload();
 })
-
-
-
